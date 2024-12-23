@@ -37,7 +37,7 @@ export class TextClassificationRunnable {
 
   async invoke(
     input: string,
-    options?: Partial<RunnableConfig<Record<string, any>>> | undefined
+    options?: Partial<RunnableConfig<Record<string, any>>> | undefined,
   ): Promise<string> {
     const response = await fetch(this.apiUrl, {
       method: 'POST',
@@ -51,21 +51,21 @@ export class TextClassificationRunnable {
 
   batch(
     inputs: any[],
-    options?: Partial<RunnableConfig<Record<string, any>>> | undefined
+    options?: Partial<RunnableConfig<Record<string, any>>> | undefined,
   ): Promise<any[]> {
     return Promise.resolve(inputs);
   }
 
   async *_streamIterator(
     input: any,
-    options?: Partial<RunnableConfig<Record<string, any>>> | undefined
+    options?: Partial<RunnableConfig<Record<string, any>>> | undefined,
   ): AsyncGenerator<any> {
     yield await this.invoke(input, options);
   }
 
   stream(
     input: any,
-    options?: Partial<RunnableConfig<Record<string, any>>> | undefined
+    options?: Partial<RunnableConfig<Record<string, any>>> | undefined,
   ): any {
     return this._streamIterator(input, options);
   }
