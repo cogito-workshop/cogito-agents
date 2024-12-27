@@ -18,20 +18,42 @@ import {
   // SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import {
+  AvailableWidgetTypes,
+  WidgetCategories,
+  type WidgetItem,
+} from '@/constants';
+import { useDnD } from '@/hooks/useDnD';
+import { useEffect } from 'react';
 
 export function NavMain({
   items,
 }: {
   items: {
-    title: string;
+    title: WidgetCategories;
     icon?: LucideIcon;
     isActive?: boolean;
-    items?: {
-      title: string;
-      icon: LucideIcon;
-    }[];
+    items?: WidgetItem[];
   }[];
 }) {
+  const [type, setType] = useDnD();
+
+  const onDragStart = (
+    event: React.DragEvent,
+    nodeType: AvailableWidgetTypes,
+  ) => {
+    setType(nodeType);
+
+    event.dataTransfer.effectAllowed = 'move';
+  };
+
+  useEffect(() => {
+    if (type) {
+      // statistic of one component usage
+      // console.log(type);
+    }
+  }, [type]);
+
   return (
     <SidebarGroup>
       <SidebarInput className="mb-2" placeholder="enter widget name..." />
@@ -55,10 +77,14 @@ export function NavMain({
                 <SidebarMenuSub>
                   {item.items?.map((subItem) => (
                     <SidebarMenuSubItem
-                      key={subItem.title}
+                      key={subItem.type}
+                      draggable
+                      onDragStart={(ev) =>
+                        onDragStart(ev, subItem.type as AvailableWidgetTypes)
+                      }
                       className="w-1/3 h-16 border select-none rounded-md flex flex-col justify-center items-center cursor-pointer duration-300 hover:border-blue-400"
                     >
-                      {item.icon && <item.icon />}
+                      {subItem.icon}
                       <span className="text-xs mt-1">{subItem.title}</span>
                     </SidebarMenuSubItem>
                   ))}
