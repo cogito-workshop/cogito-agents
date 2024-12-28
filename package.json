@@ -1,19 +1,38 @@
 {
   "name": "cogito-agents",
   "private": true,
+  "description": "The awesome AI Agents framework",
+  "homepage": "https://github.com/cogito-workshop/cogito-agents",
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "run:demo": "npx tsx",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
+    "@arethetypeswrong/cli": "^0.17.2",
+    "@changesets/cli": "^2.27.11",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
     "turbo": "^2.3.3",
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "vitest": "^2.1.8"
   },
+  "author": "JiaFu <fujia.site@gmail.com> (https://fujia.site)",
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
+  },
+  "bugs": {
+    "url": "https://github.com/cogito-workshop/cogito-agents/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cogito-workshop/cogito-agents"
   }
 }

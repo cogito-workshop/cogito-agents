@@ -12,6 +12,11 @@
   },
   "dependencies": {
     "@cogito-tech/ui": "workspace:*",
+    "@langchain/core": "^0.3.26",
+    "@lenml/tokenizer-llama3": "^3.0.1",
+    "@lenml/tokenizers": "^3.0.3",
+    "@tensorflow/tfjs": "^4.22.0",
+    "langchain": "^0.3.7",
     "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
