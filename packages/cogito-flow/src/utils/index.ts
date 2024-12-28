@@ -1,7 +1,9 @@
-import { nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 import { Node, NodePositionChange, XYPosition } from '@xyflow/react';
 
-export const genUUID = (len = 16) => nanoid(len);
+const ALPHANUMERIC = '1234567890abcdefghijklmnopqrstuvwxyz';
+
+export const genUUID = (len = 12) => customAlphabet(ALPHANUMERIC, len)();
 
 type GetHelperLinesResult = {
   horizontal?: number;

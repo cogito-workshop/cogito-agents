@@ -1,7 +1,5 @@
-/**
- * text_input
- */
 export const nodeResizerDefaultConfigurations = {
+  // geneal
   text_input: {
     minWidgth: 128,
     minHeight: 32,

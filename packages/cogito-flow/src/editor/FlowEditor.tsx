@@ -8,6 +8,7 @@ import {
   Edge,
   NodeChange,
   OnNodesChange,
+  Panel,
   // MiniMap,
   ReactFlow,
   ReactFlowInstance,
@@ -25,8 +26,8 @@ import { useDnD } from '@/hooks/useDnD';
 import { debounce } from 'lodash-es';
 import { getHelperLines } from '@/utils';
 import { addWidgetViaWidgetType } from './addWidget';
-import { proOptions } from '@/constants';
 import { WIDGET_MAP } from '@/widgets';
+import { Button } from '@/components/ui/button';
 
 // const proOptions: ProOptions = { account: 'paid-pro', hideAttribution: true };
 
@@ -59,9 +60,8 @@ function FlowEditor() {
     }
   }, [rfInstance]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const debounceSyncChanges = debounce((changes: NodeChange[]) => {
-    console.log(changes);
-
     syncStatus();
   }, 1000);
 
@@ -96,7 +96,6 @@ function FlowEditor() {
       // project was renamed to screenToFlowPosition
       // and you don't need to subtract the reactFlowBounds.left/top anymore
       // details: https://reactflow.dev/whats-new/2023-11-10
-      console.log(ev);
       const position = screenToFlowPosition({
         x: ev.clientX,
         y: ev.clientY,
@@ -105,7 +104,7 @@ function FlowEditor() {
       const newNode = addWidgetViaWidgetType({
         type,
         position,
-        data: { label: `${type} node` },
+        data: { type: `${type}` },
       });
 
       setNodes((nds) => nds.concat(newNode));
@@ -118,7 +117,6 @@ function FlowEditor() {
       // reset the helper lines (clear existing lines, if any)
       setHelperLineHorizontal(undefined);
       setHelperLineVertical(undefined);
-      console.log('changes', changes);
       // this will be true if it's a single node being dragged
       // inside we calculate the helper lines and snap position for the position where the node is being moved to
       if (
@@ -128,7 +126,6 @@ function FlowEditor() {
         changes[0].position
       ) {
         const helperLines = getHelperLines(changes[0], nodes);
-
         // if we have a helper line, we snap the node to the helper line position
         // this is being done by manipulating the node position inside the change object
         changes[0].position.x =
@@ -164,7 +161,7 @@ function FlowEditor() {
 
   return (
     <div
-      className="w-full h-full border rounded-lg relative bg-transparent"
+      className="w-full h-full border rounded-lg relative"
       ref={reactFlowWrapper}
     >
       <ReactFlow
@@ -176,25 +173,32 @@ function FlowEditor() {
         onDrop={onDrop}
         onDragOver={onDragOver}
         onConnect={onConnect}
-        proOptions={proOptions}
         nodeTypes={WIDGET_MAP}
-        // fitView
+        fitView
         minZoom={1}
         maxZoom={1}
-      />
-      <Controls
-        showZoom={false}
-        showFitView={false}
-        // style={{
-        //   bottom: 24,
-        // }}
-      />
-      {/* <MiniMap /> */}
-      <Background variant={BackgroundVariant.Dots} gap={10} />
-      <HelperLines
-        horizontal={helperLineHorizontal}
-        vertical={helperLineVertical}
-      />
+      >
+        <Controls
+          showZoom={false}
+          showFitView={false}
+          // style={{
+          //   bottom: 24,
+          // }}
+        />
+        {/* <MiniMap /> */}
+        <Background variant={BackgroundVariant.Dots} gap={10} />
+        <HelperLines
+          horizontal={helperLineHorizontal}
+          vertical={helperLineVertical}
+        />
+        <Panel position="top-right">
+          <div className="rounded-lg bg-white h-16 w-60 flex items-center px-3 shadow-lg">
+            <Button onClick={() => {}} size="sm" variant="outline">
+              RUN
+            </Button>
+          </div>
+        </Panel>
+      </ReactFlow>
     </div>
   );
 }

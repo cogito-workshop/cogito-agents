@@ -24,7 +24,6 @@ export type HelperLinesProps = {
 // it puts a canvas on top of the React Flow pane and draws the lines using the canvas API
 function HelperLinesRenderer({ horizontal, vertical }: HelperLinesProps) {
   const { width, height, transform } = useStore(storeSelector);
-
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {

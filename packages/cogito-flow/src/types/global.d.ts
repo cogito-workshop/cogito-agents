@@ -20,4 +20,6 @@ declare global {
     ollama_llm: unknown;
     weather_query_tool: unknown;
   }
+
+  type DIVClickFunction = React.MouseEventHandler<HTMLDivElement>;
 }

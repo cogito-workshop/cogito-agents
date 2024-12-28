@@ -1,5 +1,6 @@
 import React from 'react';
 import TextInputWidget from './general/TextInputWidget';
+import OllamaLLMWidget from './llms/OllamaLLMWidget';
 import { AvailableWidgetTypes } from '@/constants';
 
 export const WIDGET_MAP = {
@@ -14,7 +15,7 @@ export const WIDGET_MAP = {
   // stores
   memory_store: () => null,
   // LLMs
-  ollama: () => null,
+  ollama_llm: (props) => <OllamaLLMWidget {...props} />,
   // tools
   weather_query_tool: () => null,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -82,7 +82,7 @@ export const STORE_WIDGETS = {
 export type StoreWidgetTypes = keyof typeof STORE_WIDGETS;
 
 export const LLM_WIDGETS = {
-  ollama: {
+  ollama_llm: {
     icon: <SiOllama />,
     entity: 'OllamaLLM',
     title: 'Ollama',
