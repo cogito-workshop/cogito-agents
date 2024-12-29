@@ -1,5 +1,5 @@
 import { type Node } from '@xyflow/react';
-import { AvailableWidgetTypes } from '../constants';
+import { AvailableWidgetTypes as AvailableWidgetTypesAlias } from '../constants';
 
 declare global {
   type BaseNode = Node<Record<string, unknown>, AvailableWidgetTypes>;
@@ -22,4 +22,6 @@ declare global {
   }
 
   type DIVClickFunction = React.MouseEventHandler<HTMLDivElement>;
+
+  type AvailableWidgetTypes = AvailableWidgetTypesAlias;
 }
