@@ -1,11 +1,13 @@
 import React from 'react';
 import TextInputWidget from './general/TextInputWidget';
-import OllamaLLMWidget from './llms/OllamaLLMWidget';
 import { AvailableWidgetTypes } from '@/constants';
+import OllamaLLMWidget from './llms/OllamaLLMWidget';
+import ChatBoxWidget from './general/ChatBoxWidget';
 
 export const WIDGET_MAP = {
   // general
   text_input: (props) => <TextInputWidget {...props} />,
+  chat_box: (props) => <ChatBoxWidget {...props} />,
   // agents
   weather_agent: () => null,
   // classifiers

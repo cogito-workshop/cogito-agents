@@ -1,5 +1,5 @@
 import { values } from 'lodash-es';
-import { RiInputField } from 'react-icons/ri';
+import { RiInputField, RiChatAiLine } from 'react-icons/ri';
 import { SiOllama, SiOpenai } from 'react-icons/si';
 import { TiWeatherPartlySunny } from 'react-icons/ti';
 import { FcGoogle } from 'react-icons/fc';
@@ -24,6 +24,14 @@ export const GENERAL_WIDGETS = {
     type: 'text_input', // unique key
     category: WidgetCategories.General,
     description: 'One simple input widget', // for AI use
+  },
+  chat_box: {
+    icon: <RiChatAiLine />,
+    entity: 'ChatBox',
+    title: 'Chat Box',
+    type: 'chat_box', // unique key
+    category: WidgetCategories.General,
+    description: '', // for AI use
   },
 } satisfies Record<string, WidgetItem>;
 

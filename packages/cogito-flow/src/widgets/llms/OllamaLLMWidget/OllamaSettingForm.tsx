@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { memo } from 'react';
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -22,7 +23,7 @@ const formSchema = z.object({
   }),
 });
 
-export function ProfileForm() {
+function OllamaSettingForm() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,3 +63,5 @@ export function ProfileForm() {
     </Form>
   );
 }
+
+export default memo(OllamaSettingForm);

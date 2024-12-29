@@ -8,11 +8,10 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 import { AvailableWidgetTypes } from '@/constants';
+import { memo } from 'react';
 
-export const WidgetSettingSheet: React.FC<WidgetSettingSheetProps> = (
-  props,
-) => {
-  const { open, type, onOpenChange } = props;
+const WidgetSettingSheet: React.FC<WidgetSettingSheetProps> = (props) => {
+  const { open, type, onOpenChange, renderForm } = props;
   console.log(type);
   return (
     <div>
@@ -24,15 +23,18 @@ export const WidgetSettingSheet: React.FC<WidgetSettingSheetProps> = (
 
             </SheetDescription> */}
           </SheetHeader>
+          {renderForm()}
         </SheetContent>
       </Sheet>
     </div>
   );
 };
 
+export default memo(WidgetSettingSheet);
+
 export interface WidgetSettingSheetProps {
   open: boolean;
   type: AvailableWidgetTypes;
-  onOpenChange: (open: boolean) => void;
-  onFormChange: (values: Record<string, unknown>) => void;
+  onOpenChange?: (open: boolean) => void;
+  renderForm: () => React.ReactNode;
 }

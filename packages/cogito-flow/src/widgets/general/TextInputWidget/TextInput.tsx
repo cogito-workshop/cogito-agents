@@ -22,7 +22,11 @@ export const TextInput = ({
       className="w-full h-full box-border flex flex-col shadow-inner"
       data-widget-id={id}
     >
-      <WidgetHeader name={displayName} onWidgetSetting={onWidgetSetting} />
+      <WidgetHeader
+        name={displayName}
+        onWidgetSetting={onWidgetSetting}
+        id={id}
+      />
       <div className="flex-1">
         <input
           className="w-full h-full box-border px-2 border rounded-sm min-h-8 min-w-24"

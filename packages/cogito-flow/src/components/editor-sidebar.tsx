@@ -16,7 +16,9 @@ import {
   WidgetList,
 } from '@/constants/widget-panel-config';
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function EditorSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

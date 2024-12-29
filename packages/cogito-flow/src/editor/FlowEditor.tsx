@@ -8,15 +8,13 @@ import {
   Edge,
   NodeChange,
   OnNodesChange,
-  Panel,
-  // MiniMap,
+  type ProOptions,
   ReactFlow,
   ReactFlowInstance,
   ReactFlowProvider,
   useEdgesState,
   useNodesState,
   useReactFlow,
-  // useReactFlow,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useCallback, useRef, useState } from 'react';
@@ -27,9 +25,8 @@ import { debounce } from 'lodash-es';
 import { getHelperLines } from '@/utils';
 import { addWidgetViaWidgetType } from './addWidget';
 import { WIDGET_MAP } from '@/widgets';
-import { Button } from '@/components/ui/button';
 
-// const proOptions: ProOptions = { account: 'paid-pro', hideAttribution: true };
+const proOptions: ProOptions = { hideAttribution: true };
 
 function FlowEditor() {
   const [nodes, setNodes] = useNodesState<CustomWidgetNode>([]);
@@ -175,8 +172,9 @@ function FlowEditor() {
         onConnect={onConnect}
         nodeTypes={WIDGET_MAP}
         fitView
-        minZoom={1}
-        maxZoom={1}
+        // minZoom={1}
+        // maxZoom={1}
+        proOptions={proOptions}
       >
         <Controls
           showZoom={false}
@@ -191,13 +189,13 @@ function FlowEditor() {
           horizontal={helperLineHorizontal}
           vertical={helperLineVertical}
         />
-        <Panel position="top-right">
+        {/* <Panel position="top-right">
           <div className="rounded-lg bg-white h-16 w-60 flex items-center px-3 shadow-lg">
             <Button onClick={() => {}} size="sm" variant="outline">
               RUN
             </Button>
           </div>
-        </Panel>
+        </Panel> */}
       </ReactFlow>
     </div>
   );
