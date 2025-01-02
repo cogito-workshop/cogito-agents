@@ -1,9 +1,7 @@
-import { Handle, Position } from '@xyflow/react';
-
 import { WidgetHeader } from '@/components/widgets/WidgetHeader';
 import { defaultConfig } from './config';
 
-export const TextInput = ({
+export const TextInputWidget = ({
   id,
   defaultValue,
   onChange,
@@ -35,8 +33,6 @@ export const TextInput = ({
           placeholder="enter text..."
         />
       </div>
-      <Handle type="source" position={Position.Left} className="w-2 h-2" />
-      <Handle type="target" position={Position.Right} className="w-2 h-2" />
     </div>
   );
 };

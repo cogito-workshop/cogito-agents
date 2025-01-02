@@ -1,4 +1,5 @@
-import withBase from '@/widgets/BaseWidget/withBase';
-import { TextInput } from './TextInput';
+import { defaultConfig } from './config';
 
-export default withBase(TextInput);
+export const TEXT_INPUT_HANDLES = defaultConfig.handles;
+
+export { TextInputWidget } from './TextInput';

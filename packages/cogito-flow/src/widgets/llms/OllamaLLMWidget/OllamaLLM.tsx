@@ -1,10 +1,9 @@
 import { WidgetHeader } from '@/components/widgets/WidgetHeader';
-import { defaultConfig, handleLablePosition } from './config';
-import { Handle } from '@xyflow/react';
+import { defaultConfig } from './config';
 
-export const OllamaLLM: React.FC<OllamaLLMProps> = (props) => {
+export const OllamaLLMWidget: React.FC<OllamaLLMProps> = (props) => {
   const { id, onWidgetSetting } = props;
-  const { displayName, handels } = defaultConfig;
+  const { displayName } = defaultConfig;
 
   return (
     <div
@@ -20,21 +19,6 @@ export const OllamaLLM: React.FC<OllamaLLMProps> = (props) => {
       <div className="">
         <div></div>
       </div>
-      {handels.map((handle) => (
-        <Handle
-          type={handle.type}
-          position={handle.position}
-          style={{
-            transform: `translateY(${handle.offsetY}px)`,
-          }}
-          id={handle.id}
-          className="!w-2 !h-2"
-        >
-          <span className={handleLablePosition({ position: handle.position })}>
-            {handle.label}
-          </span>
-        </Handle>
-      ))}
     </div>
   );
 };

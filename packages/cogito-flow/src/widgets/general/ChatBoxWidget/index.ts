@@ -1,4 +1,4 @@
-import withBase from '@/widgets/BaseWidget/withBase';
-import { ChatBox } from './ChatBox';
+import { defaultConfig } from './config';
 
-export default withBase(ChatBox);
+export const CHAT_BOX_HANDLES = defaultConfig.handles;
+export { ChatBoxWidget } from './ChatBox';

@@ -1,4 +1,10 @@
-import withBase from '@/widgets/BaseWidget/withBase';
-import { OllamaLLM } from './OllamaLLM';
+// import withBase from '@/widgets/BaseWidget/withBase';
+import { defaultConfig } from './config';
 
-export default withBase(OllamaLLM);
+export { OllamaLLMWidget } from './OllamaLLM';
+
+export const OLLAMA_LLM_HANDLES = defaultConfig.handles;
+
+export { default as OllamaSettingForm } from './OllamaSettingForm';
+
+// export default withBase(OllamaLLM);

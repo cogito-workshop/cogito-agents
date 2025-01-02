@@ -25,6 +25,7 @@ import { debounce } from 'lodash-es';
 import { getHelperLines } from '@/utils';
 import { addWidgetViaWidgetType } from './addWidget';
 import { WIDGET_MAP } from '@/widgets';
+import { DELETE_KEY_CODE } from './constants';
 
 const proOptions: ProOptions = { hideAttribution: true };
 
@@ -39,6 +40,7 @@ function FlowEditor() {
   >(undefined);
   const reactFlowWrapper = useRef(null);
   const { screenToFlowPosition } = useReactFlow();
+  const [preventScrolling, setPreventScrolling] = useState(false);
   const [type] = useDnD();
   const [rfInstance, setRfInstance] =
     useState<ReactFlowInstance<CustomWidgetNode> | null>(null);
@@ -156,6 +158,20 @@ function FlowEditor() {
     [setEdges],
   );
 
+  // useEffect(() => {
+  //   document.addEventListener('keydown', (ev: KeyboardEvent) => {
+  //     console.log(ev.key);
+  //   });
+  // }, []);
+
+  const handleNodeMouseEnter = useCallback(() => {
+    setPreventScrolling(() => false);
+  }, []);
+
+  const handleNodeMouseLeave = useCallback(() => {
+    setPreventScrolling(() => true);
+  }, []);
+
   return (
     <div
       className="w-full h-full border rounded-lg relative"
@@ -169,9 +185,15 @@ function FlowEditor() {
         onInit={setRfInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
+        onNodeMouseEnter={handleNodeMouseEnter}
+        onNodeMouseLeave={handleNodeMouseLeave}
         onConnect={onConnect}
         nodeTypes={WIDGET_MAP}
         fitView
+        deleteKeyCode={DELETE_KEY_CODE}
+        preventScrolling={preventScrolling}
+        // zoomOnScroll={true}
+        // panOnScroll={true}
         // minZoom={1}
         // maxZoom={1}
         proOptions={proOptions}
