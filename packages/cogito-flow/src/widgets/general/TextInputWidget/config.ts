@@ -2,8 +2,9 @@ import { Position } from '@xyflow/react';
 
 import type { WidgetCommonDefaultConfig } from '@/widgets/interface';
 
-export const defaultConfig: WidgetCommonDefaultConfig = {
-  displayName: 'TextInput',
+export const DEFAULT_CONFIG: WidgetCommonDefaultConfig = {
+  widgetName: 'TextInput',
+  version: '0.1.0',
   handles: [
     {
       type: 'source',

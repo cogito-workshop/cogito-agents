@@ -1,28 +1,38 @@
 import { useCallback, useMemo, useState } from 'react';
+import { Handle } from '@xyflow/react';
+
 import { BaseWidget } from './index';
 import { AvailableWidgetTypes } from '@/constants';
-import WidgetSettingSheet from './WidgetSettingSheet';
-import {
-  handleLablePosition,
-  WIDGET_SETTING_FORM_MAP,
-  WIDGET_SETTING_HANDLE_MAP,
-} from './constants';
-import { Handle } from '@xyflow/react';
+import WidgetController from './WidgetController';
+import { handleLablePosition, WIDGET_SETTING_HANDLE_MAP } from './constants';
 import type { WidgetHandle } from '../interface';
+import { widgetControllerFactory } from '../WidgetManager/WidgetControllerFactory';
+// import { WidgetControllerContext } from './WidgetControllerContext';
 
 function withBase(WrappedWidget: React.ElementType) {
   return function WrappedBaseWidget(props: WrappedBaseWidgetProps) {
-    const { type } = props;
+    const { type, id } = props;
+
     const [openSetting, setOpenSetting] = useState(false);
 
     const onWidgetSetting = useCallback(() => {
-      console.log(type);
       setOpenSetting(true);
-    }, [type]);
+    }, []);
 
-    const renderForm = useCallback(() => {
-      return WIDGET_SETTING_FORM_MAP[type];
-    }, [type]);
+    const handleControllerSubmit = useCallback(
+      (values: Record<string, unknown>) => {
+        console.log('form changed: ', values);
+      },
+      [],
+    );
+
+    const renderControllers = useCallback(() => {
+      return widgetControllerFactory.getWidgetControllerLazy(type, {
+        type,
+        id,
+        onSubmit: handleControllerSubmit,
+      });
+    }, [type, id, handleControllerSubmit]);
 
     const widgetHandles: Array<WidgetHandle> = useMemo(() => {
       return WIDGET_SETTING_HANDLE_MAP[type] || [];
@@ -30,13 +40,17 @@ function withBase(WrappedWidget: React.ElementType) {
 
     return (
       <BaseWidget {...props}>
-        <WrappedWidget {...props} onWidgetSetting={onWidgetSetting} />
-        <WidgetSettingSheet
+        <WrappedWidget
+          {...props}
+          onWidgetSetting={onWidgetSetting}
+          key={`entity-${id}`}
+        />
+
+        <WidgetController
           open={openSetting}
           type={type}
-          // onFormChange={handleFormChange}
           onOpenChange={setOpenSetting}
-          renderForm={renderForm}
+          renderControllers={renderControllers}
         />
 
         {widgetHandles.map((handle) => (
@@ -46,7 +60,8 @@ function withBase(WrappedWidget: React.ElementType) {
             style={{
               transform: `translateY(${handle.offsetY}px)`,
             }}
-            id={handle.id}
+            id={id}
+            key={handle.id}
             className="!w-2 !h-2"
           >
             <span

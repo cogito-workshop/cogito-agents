@@ -1,10 +1,9 @@
-// import withBase from '@/widgets/BaseWidget/withBase';
-import { defaultConfig } from './config';
+import { DEFAULT_CONFIG } from './config';
+import { OllamaLLMWidget } from './entity';
+import OllamaLLMController from './controller';
 
-export { OllamaLLMWidget } from './OllamaLLM';
-
-export const OLLAMA_LLM_HANDLES = defaultConfig.handles;
-
-export { default as OllamaSettingForm } from './OllamaSettingForm';
-
-// export default withBase(OllamaLLM);
+export default {
+  config: DEFAULT_CONFIG,
+  entity: OllamaLLMWidget,
+  controller: OllamaLLMController,
+};

@@ -4,14 +4,14 @@ import { PropsWithChildren } from 'react';
 export const WidgetHeader: React.FC<PropsWithChildren<WidgetHeaderProps>> = (
   props,
 ) => {
-  const { name, onWidgetSetting, id } = props;
+  const { name, onWidgetSetting, widgetId } = props;
   return (
     <div className="flex justify-between min-h-14 bg-white border-b">
       <div className="flex items-center">
         <GripVertical size={18} className="text-gray-500" />
         <div className="text-xs">
           <div>{name}</div>
-          <div className="text-gray-500">ID: {id}</div>
+          <div className="text-gray-500">ID: {widgetId}</div>
         </div>
       </div>
       <div className="flex items-center mr-2">
@@ -25,6 +25,6 @@ export const WidgetHeader: React.FC<PropsWithChildren<WidgetHeaderProps>> = (
 
 export interface WidgetHeaderProps {
   name: string;
-  id: string;
+  widgetId: string;
   onWidgetSetting: DIVClickFunction;
 }

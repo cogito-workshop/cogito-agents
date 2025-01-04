@@ -9,6 +9,7 @@ export interface WidgetHandle {
 }
 
 export interface WidgetCommonDefaultConfig {
-  displayName: string;
+  widgetName: string;
+  version: string;
   handles: Array<WidgetHandle>;
 }

@@ -1,5 +1,5 @@
 import { WidgetHeader } from '@/components/widgets/WidgetHeader';
-import { defaultConfig } from './config';
+import { DEFAULT_CONFIG } from './config';
 
 export const TextInputWidget = ({
   id,
@@ -7,7 +7,7 @@ export const TextInputWidget = ({
   onChange,
   onWidgetSetting,
 }: TextInputProps) => {
-  const { displayName } = defaultConfig;
+  const { widgetName } = DEFAULT_CONFIG;
 
   const handleChanged: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
@@ -21,9 +21,9 @@ export const TextInputWidget = ({
       data-widget-id={id}
     >
       <WidgetHeader
-        name={displayName}
+        name={widgetName}
         onWidgetSetting={onWidgetSetting}
-        id={id}
+        widgetId={id}
       />
       <div className="flex-1">
         <input

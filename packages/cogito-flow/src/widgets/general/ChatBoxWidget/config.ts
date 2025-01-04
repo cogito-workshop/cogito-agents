@@ -1,8 +1,9 @@
 import type { WidgetCommonDefaultConfig } from '@/widgets/interface';
 import { Position } from '@xyflow/react';
 
-export const defaultConfig: WidgetCommonDefaultConfig = {
-  displayName: 'ChatBox',
+export const DEFAULT_CONFIG: WidgetCommonDefaultConfig = {
+  widgetName: 'ChatBox',
+  version: '0.1.0',
   handles: [
     {
       type: 'source',

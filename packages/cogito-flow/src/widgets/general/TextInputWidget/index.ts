@@ -1,5 +1,9 @@
-import { defaultConfig } from './config';
+import { DEFAULT_CONFIG } from './config';
+import { TextInputWidget } from './entity';
+import TextInputController from './controller';
 
-export const TEXT_INPUT_HANDLES = defaultConfig.handles;
-
-export { TextInputWidget } from './TextInput';
+export default {
+  config: DEFAULT_CONFIG,
+  entity: TextInputWidget,
+  controller: TextInputController,
+};

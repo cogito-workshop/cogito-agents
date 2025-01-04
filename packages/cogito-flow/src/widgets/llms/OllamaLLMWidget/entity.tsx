@@ -1,20 +1,19 @@
 import { WidgetHeader } from '@/components/widgets/WidgetHeader';
-import { defaultConfig } from './config';
+import { DEFAULT_CONFIG } from './config';
 
 export const OllamaLLMWidget: React.FC<OllamaLLMProps> = (props) => {
   const { id, onWidgetSetting } = props;
-  const { displayName } = defaultConfig;
+  const { widgetName } = DEFAULT_CONFIG;
 
   return (
     <div
-      id={id}
       data-test-id={id}
       className="w-[360px] h-[560px] flex flex-col shadow-md bg-white"
     >
       <WidgetHeader
-        name={displayName}
+        name={widgetName}
         onWidgetSetting={onWidgetSetting}
-        id={id}
+        widgetId={id}
       />
       <div className="">
         <div></div>

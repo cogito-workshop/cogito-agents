@@ -1,7 +1,6 @@
-import {
-  OllamaSettingForm,
-  OLLAMA_LLM_HANDLES,
-} from '@/widgets/llms/OllamaLLMWidget';
+import OllamaLLMWidget from '@/widgets/llms/OllamaLLMWidget';
+import TextInputWidget from '../general/TextInputWidget';
+import ChatBoxWidget from '../general/ChatBoxWidget';
 
 import { WidgetHandle } from '../interface';
 import { cva } from 'class-variance-authority';
@@ -23,18 +22,51 @@ export const handleLablePosition = cva(
   },
 );
 
-export const WIDGET_SETTING_FORM_MAP: Record<
+export const WIDGET_CONTROLLER_CONFIG_MAP: Record<
   AvailableWidgetTypes,
-  React.ReactNode
+  {
+    controller: (props: Record<string, unknown>) => React.ReactNode;
+    widgetName: string;
+  }
 > = {
-  text_input: null,
-  weather_agent: null,
-  openai_classifier: null,
-  web_search: null,
-  memory_store: null,
-  ollama_llm: <OllamaSettingForm />,
-  weather_query_tool: null,
-  chat_box: null,
+  text_input: {
+    widgetName: TextInputWidget.config.widgetName,
+    controller: (props: Record<string, unknown>) => (
+      <TextInputWidget.controller {...props} />
+    ),
+  },
+  weather_agent: {
+    widgetName: '',
+    controller: () => null,
+  },
+  openai_classifier: {
+    widgetName: '',
+    controller: () => null,
+  },
+  web_search: {
+    widgetName: '',
+    controller: () => null,
+  },
+  memory_store: {
+    widgetName: '',
+    controller: () => null,
+  },
+  ollama_llm: {
+    widgetName: OllamaLLMWidget.config.widgetName,
+    controller: (props: Record<string, unknown>) => (
+      <OllamaLLMWidget.controller {...props} />
+    ),
+  },
+  weather_query_tool: {
+    widgetName: '',
+    controller: () => null,
+  },
+  chat_box: {
+    widgetName: ChatBoxWidget.config.widgetName,
+    controller: (props: Record<string, unknown>) => (
+      <ChatBoxWidget.controller {...props} />
+    ),
+  },
 };
 
 export const WIDGET_SETTING_HANDLE_MAP: Record<
@@ -46,7 +78,7 @@ export const WIDGET_SETTING_HANDLE_MAP: Record<
   openai_classifier: [],
   web_search: [],
   memory_store: [],
-  ollama_llm: OLLAMA_LLM_HANDLES,
+  ollama_llm: OllamaLLMWidget.config.handles,
   weather_query_tool: [],
   chat_box: [],
 };

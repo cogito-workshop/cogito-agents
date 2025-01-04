@@ -13,19 +13,31 @@ import {
 import {
   DEFAULT_TEAMS,
   DEFAULT_USER_PROFILE,
-  WidgetList,
 } from '@/constants/widget-panel-config';
+import { useEffect, useState } from 'react';
+import { widgetThumbnailFactory } from '@/widgets/WidgetManager/WidgetThumbnailFactory';
+import { WidgetCategoryItem } from '@/widgets/WidgetManager/interface';
 
 export function EditorSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const [widgetList, setWidgetList] = useState<
+    Omit<WidgetCategoryItem, 'category'>[]
+  >([]);
+
+  useEffect(() => {
+    if (widgetThumbnailFactory.WidgetThumbnailList.length > 0) {
+      setWidgetList(widgetThumbnailFactory.WidgetThumbnailList);
+    }
+  }, []);
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <TeamSwitcher teams={DEFAULT_TEAMS} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={WidgetList} />
+        <NavMain items={widgetList} />
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>

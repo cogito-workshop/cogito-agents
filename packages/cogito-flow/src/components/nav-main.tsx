@@ -24,7 +24,7 @@ import {
   type WidgetItem,
 } from '@/constants';
 import { useDnD } from '@/hooks/useDnD';
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 export function NavMain({
   items,
@@ -36,23 +36,16 @@ export function NavMain({
     items?: WidgetItem[];
   }[];
 }) {
-  const [type, setType] = useDnD();
+  const { setType, setIsDragging } = useDnD();
 
-  const onDragStart = (
-    event: React.DragEvent,
-    nodeType: AvailableWidgetTypes,
-  ) => {
-    setType(nodeType);
-
-    event.dataTransfer.effectAllowed = 'move';
-  };
-
-  useEffect(() => {
-    if (type) {
-      // statistic of one component usage
-      // console.log(type);
-    }
-  }, [type]);
+  const onDragStart = useCallback(
+    (event: React.DragEvent, nodeType: AvailableWidgetTypes) => {
+      setType(nodeType);
+      setIsDragging(() => true);
+      event.dataTransfer.effectAllowed = 'move';
+    },
+    [setType, setIsDragging],
+  );
 
   return (
     <SidebarGroup>
@@ -82,6 +75,9 @@ export function NavMain({
                       onDragStart={(ev) =>
                         onDragStart(ev, subItem.type as AvailableWidgetTypes)
                       }
+                      onDragOver={() => {
+                        setIsDragging(() => false);
+                      }}
                       className="w-1/3 h-16 border select-none rounded-md flex flex-col justify-center items-center cursor-pointer duration-300 hover:border-blue-400"
                     >
                       {subItem.icon}
