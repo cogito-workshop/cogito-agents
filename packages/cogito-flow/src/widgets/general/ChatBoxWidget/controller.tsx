@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -23,7 +23,7 @@ const formSchema = z.object({
   }),
 });
 
-function OllamaSettingForm() {
+function OllamaLLMController() {
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,6 +38,12 @@ function OllamaSettingForm() {
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
+
+  useEffect(() => {
+    return () => {
+      console.log('unmount');
+    };
+  }, []);
 
   return (
     <Form {...form}>
@@ -64,4 +70,4 @@ function OllamaSettingForm() {
   );
 }
 
-export default memo(OllamaSettingForm);
+export default memo(OllamaLLMController);

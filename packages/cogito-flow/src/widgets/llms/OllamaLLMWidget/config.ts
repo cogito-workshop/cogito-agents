@@ -1,27 +1,13 @@
 import { Position } from '@xyflow/react';
-import { cva } from 'class-variance-authority';
 
-export const handleLablePosition = cva(
-  'text-xs text-gray-400 whitespace-nowrap inline-block',
-  {
-    variants: {
-      position: {
-        left: '-translate-x-full -ml-1.5',
-        top: '',
-        right: 'ml-3',
-        bottom: '',
-      },
-    },
-    defaultVariants: {
-      position: 'left',
-    },
-  },
-);
+import type { WidgetCommonDefaultConfig } from '@/widgets/interface';
 
-export const defaultConfig = {
-  displayName: 'OllamaLLM',
+export const DEFAULT_CONFIG: WidgetCommonDefaultConfig &
+  OllamaLLMDefaultConfig = {
+  widgetName: 'OllamaLLM',
+  version: '0.1.0',
   host: 'http://127.0.0.1:11434',
-  handels: [
+  handles: [
     {
       type: 'source',
       offsetY: 0,
@@ -59,3 +45,7 @@ export const defaultConfig = {
     },
   ],
 } as const;
+
+export interface OllamaLLMDefaultConfig {
+  host?: string;
+}

@@ -1,9 +1,9 @@
-import DashboardPage from './app/dashboard/page';
+import { AgentFlow } from './AgentFlow';
 
 function App() {
   return (
     <section>
-      <DashboardPage />
+      <AgentFlow />
     </section>
   );
 }

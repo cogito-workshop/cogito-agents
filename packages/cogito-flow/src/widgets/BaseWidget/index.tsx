@@ -13,7 +13,7 @@ export const BaseWidget: React.FC<PropsWithChildren<BaseWidgetProps>> = ({
   // const { minWidgth, minHeight, maxWidth, maxHeight } =
   //   nodeResizerDefaultConfigurations[type]! || {};
   return (
-    <div className="w-full h-full" key={id} id={id} data-test-id={id}>
+    <div className="w-full h-full" id={id} data-test-id={id}>
       {/* <NodeResizer
         color="#165dff"
         isVisible={selected}

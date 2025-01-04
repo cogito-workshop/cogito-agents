@@ -1,4 +1,4 @@
-// import { Button } from '@/components/ui/button';
+import { memo, useMemo } from 'react';
 import {
   Sheet,
   // SheetClose,
@@ -8,33 +8,34 @@ import {
   SheetTitle,
 } from '@/components/ui/sheet';
 import { AvailableWidgetTypes } from '@/constants';
-import { memo } from 'react';
+import { widgetControllerFactory } from '../WidgetManager/WidgetControllerFactory';
 
-const WidgetSettingSheet: React.FC<WidgetSettingSheetProps> = (props) => {
-  const { open, type, onOpenChange, renderForm } = props;
-  console.log(type);
+const WidgetController: React.FC<WidgetSettingSheetProps> = (props) => {
+  const { open, type, onOpenChange, renderControllers } = props;
+
+  const widgetName = useMemo(() => {
+    return widgetControllerFactory.getWidgetName(type);
+  }, [type]);
+
   return (
     <div>
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent className="bg-white">
           <SheetHeader>
-            <SheetTitle>Are you absolutely sure? </SheetTitle>
-            {/* <SheetDescription>
-
-            </SheetDescription> */}
+            <SheetTitle>{widgetName}</SheetTitle>
           </SheetHeader>
-          {renderForm()}
+          {renderControllers()}
         </SheetContent>
       </Sheet>
     </div>
   );
 };
 
-export default memo(WidgetSettingSheet);
+export default memo(WidgetController);
 
 export interface WidgetSettingSheetProps {
   open: boolean;
   type: AvailableWidgetTypes;
   onOpenChange?: (open: boolean) => void;
-  renderForm: () => React.ReactNode;
+  renderControllers: () => React.ReactNode;
 }

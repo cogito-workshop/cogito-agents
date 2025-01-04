@@ -1,15 +1,13 @@
-import { Handle, Position } from '@xyflow/react';
-
 import { WidgetHeader } from '@/components/widgets/WidgetHeader';
-import { defaultConfig } from './config';
+import { DEFAULT_CONFIG } from './config';
 
-export const TextInput = ({
+export const TextInputWidget = ({
   id,
   defaultValue,
   onChange,
   onWidgetSetting,
 }: TextInputProps) => {
-  const { displayName } = defaultConfig;
+  const { widgetName } = DEFAULT_CONFIG;
 
   const handleChanged: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const value = e.target.value;
@@ -23,9 +21,9 @@ export const TextInput = ({
       data-widget-id={id}
     >
       <WidgetHeader
-        name={displayName}
+        name={widgetName}
         onWidgetSetting={onWidgetSetting}
-        id={id}
+        widgetId={id}
       />
       <div className="flex-1">
         <input
@@ -35,8 +33,6 @@ export const TextInput = ({
           placeholder="enter text..."
         />
       </div>
-      <Handle type="source" position={Position.Left} className="w-2 h-2" />
-      <Handle type="target" position={Position.Right} className="w-2 h-2" />
     </div>
   );
 };

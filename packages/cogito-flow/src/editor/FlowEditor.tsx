@@ -11,24 +11,39 @@ import {
   type ProOptions,
   ReactFlow,
   ReactFlowInstance,
-  ReactFlowProvider,
+  // ReactFlowProvider,
   useEdgesState,
   useNodesState,
   useReactFlow,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useCallback, useRef, useState } from 'react';
+import { produce } from 'immer';
+import { debounce, isNull, isUndefined, has } from 'lodash-es';
+import { toast } from 'sonner';
 
 import HelperLines from './HelperLines';
 import { useDnD } from '@/hooks/useDnD';
-import { debounce } from 'lodash-es';
 import { getHelperLines } from '@/utils';
 import { addWidgetViaWidgetType } from './addWidget';
-import { WIDGET_MAP } from '@/widgets';
+// import { WIDGET_MAP } from '@/widgets'
+import { DELETE_KEY_CODE } from './constants';
+import { widgetFactory } from '@/widgets/WidgetManager/WidgetFactory';
+import { WrappedBaseWidgetProps } from '@/widgets/BaseWidget/withBase';
 
 const proOptions: ProOptions = { hideAttribution: true };
 
-function FlowEditor() {
+export interface FlowEditorProps {
+  defaultWidgetTypes?: WidgetTypes;
+}
+
+type WidgetTypes = Record<
+  AvailableWidgetTypes,
+  (props?: unknown) => React.ReactNode
+>;
+
+export function FlowEditor(props: FlowEditorProps) {
+  const { defaultWidgetTypes = {} } = props;
   const [nodes, setNodes] = useNodesState<CustomWidgetNode>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [helperLineVertical, setHelperLineVertical] = useState<
@@ -37,9 +52,16 @@ function FlowEditor() {
   const [helperLineHorizontal, setHelperLineHorizontal] = useState<
     number | undefined
   >(undefined);
+  const [widgetMapNodeTypes, setWidgetMapNodeTypes] = useState<
+    Record<
+      AvailableWidgetTypes,
+      (props: WrappedBaseWidgetProps) => React.ReactNode
+    >
+  >(defaultWidgetTypes as WidgetTypes);
   const reactFlowWrapper = useRef(null);
   const { screenToFlowPosition } = useReactFlow();
-  const [type] = useDnD();
+  const [preventScrolling, setPreventScrolling] = useState(false);
+  const { type, isDragging } = useDnD();
   const [rfInstance, setRfInstance] =
     useState<ReactFlowInstance<CustomWidgetNode> | null>(null);
 
@@ -97,16 +119,30 @@ function FlowEditor() {
         x: ev.clientX,
         y: ev.clientY,
       });
-
       const newNode = addWidgetViaWidgetType({
         type,
         position,
         data: { type: `${type}` },
       });
+      const widgetEntity = widgetFactory.getWidgetEntityLazy(type);
+
+      if (isUndefined(widgetEntity) || isNull(widgetEntity)) {
+        toast(`The Widget with ${type} type not found!`);
+        return;
+      }
+
+      // register node widget dynamically
+      if (!has(widgetMapNodeTypes, type)) {
+        setWidgetMapNodeTypes(
+          produce((draft) => {
+            draft[type] = widgetEntity;
+          }),
+        );
+      }
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [screenToFlowPosition, type, setNodes],
+    [screenToFlowPosition, type, setNodes, widgetMapNodeTypes],
   );
 
   const customApplyNodeChanges = useCallback(
@@ -156,6 +192,26 @@ function FlowEditor() {
     [setEdges],
   );
 
+  // useEffect(() => {
+  //   document.addEventListener('keydown', (ev: KeyboardEvent) => {
+  //     console.log(ev.key);
+  //   });
+  // }, []);
+
+  const handleNodeMouseEnter = useCallback(() => {
+    if (isDragging) {
+      return;
+    }
+    setPreventScrolling(() => false);
+  }, [isDragging]);
+
+  const handleNodeMouseLeave = useCallback(() => {
+    if (isDragging) {
+      return;
+    }
+    setPreventScrolling(() => true);
+  }, [isDragging]);
+
   return (
     <div
       className="w-full h-full border rounded-lg relative"
@@ -169,9 +225,15 @@ function FlowEditor() {
         onInit={setRfInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
+        onNodeMouseEnter={handleNodeMouseEnter}
+        onNodeMouseLeave={handleNodeMouseLeave}
         onConnect={onConnect}
-        nodeTypes={WIDGET_MAP}
-        fitView
+        nodeTypes={widgetMapNodeTypes}
+        // fitView
+        deleteKeyCode={DELETE_KEY_CODE}
+        preventScrolling={preventScrolling}
+        // zoomOnScroll={true}
+        // panOnScroll={true}
         // minZoom={1}
         // maxZoom={1}
         proOptions={proOptions}
@@ -201,10 +263,10 @@ function FlowEditor() {
   );
 }
 
-export const FlowEditorWithProvider = () => {
-  return (
-    <ReactFlowProvider>
-      <FlowEditor />
-    </ReactFlowProvider>
-  );
-};
+// export const FlowEditorWithProvider = () => {
+//   return (
+//     <ReactFlowProvider>
+//       <FlowEditor />
+//     </ReactFlowProvider>
+//   );
+// };

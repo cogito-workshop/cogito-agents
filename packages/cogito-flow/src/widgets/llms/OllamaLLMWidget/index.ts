@@ -1,4 +1,9 @@
-import withBase from '@/widgets/BaseWidget/withBase';
-import { OllamaLLM } from './OllamaLLM';
+import { DEFAULT_CONFIG } from './config';
+import { OllamaLLMWidget } from './entity';
+import OllamaLLMController from './controller';
 
-export default withBase(OllamaLLM);
+export default {
+  config: DEFAULT_CONFIG,
+  entity: OllamaLLMWidget,
+  controller: OllamaLLMController,
+};
