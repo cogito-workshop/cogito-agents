@@ -4,7 +4,7 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
   title: 'Cogito Agent Docs',
   description: 'The documents for Cogito Agent',
-  base: '/cogito-agents/',
+  base: '/cogito-agents',
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
