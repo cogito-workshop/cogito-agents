@@ -9,7 +9,8 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "run:demo": "npx tsx",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docs:dev": "turbo docs:dev --filter=docs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.2",
