@@ -9,10 +9,45 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' },
+      { text: 'Cookbook', link: '/markdown-examples' },
     ],
 
     sidebar: [
+      {
+        text: 'Introduction',
+        items: [
+          { text: 'Introduction', link: '/Introduction' },
+          { text: 'How it works', link: '/Introduction/How-it-works' },
+          { text: 'Quickstart', link: '/Introduction/QuickStart' },
+          { text: 'FAQs', link: '/Introduction/FAQs' },
+        ],
+      },
+
+      { text: 'Agents', items: [{ text: 'Overview', link: '' }] },
+
+      {
+        text: 'Cookbook',
+        items: [
+          {
+            text: 'General',
+            items: [
+              {
+                text: 'Form',
+                link: '',
+              },
+            ],
+          },
+          {
+            text: 'LLMs',
+            items: [
+              {
+                text: 'OpenAI',
+                link: '',
+              },
+            ],
+          },
+        ],
+      },
       {
         text: 'Examples',
         items: [
