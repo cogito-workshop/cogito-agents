@@ -10,7 +10,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "run:demo": "npx tsx",
     "prepare": "husky",
-    "docs:dev": "turbo docs:dev --filter=docs"
+    "docs:dev": "turbo docs:dev --filter=docs",
+    "docs:build": "turbo docs:build --filter=docs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.17.2",

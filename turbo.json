@@ -15,6 +15,10 @@
         "!.next/cache/**"
       ]
     },
+    "docs:build": {
+      "cache": true,
+      "persistent": true
+    },
     "lint": {
       "dependsOn": [
         "^lint"
